@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navigation Bar</title>
+  <style>
+    * {
+         margin: 0; padding: 0; box-sizing: border-box;
+         }
+    body { 
+        font-family: "Poppins", Arial, sans-serif; line-height: 1.6; scroll-behavior: smooth; 
+    }
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: transparent;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      transition: 0.3s ease-in-out;
+      z-index: 1000;
+    }
+    nav.scrolled { 
+        background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+    }
+
+    .logo {
+         font-weight: bold; font-size: 24px; color: #2563eb; 
+        }
+
+    .nav-links { 
+        display: flex; gap: 25px;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      font-size: 16px;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0; bottom: -5px;
+      width: 0; height: 2px;
+      color: #2563eb;
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover::after,
+    .nav-links a.active::after { width: 100%; }
+    .nav-links a:hover,
+    .nav-links a.active { color: #2563eb; }
+    .menu-btn { 
+        display: none; font-size: 28px; background: none; border: none; cursor: pointer; color: #333; 
+    }
+    .mobile {
+      display: none;
+      flex-direction: column;
+      background: white;
+      position: absolute;
+      top: 60px; left: 0; right: 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .mobile a {
+      padding: 15px;
+      border-top: 1px solid #eee;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+    .mobile a:hover {
+         background: #f0f4ff; color: #2563eb; 
+        }
+    header, section {
+      min-height: 100vh;
+      padding: 80px 20px 40px;
+      display: flex; justify-content: center; align-items: center;
+      flex-direction: column; text-align: center;
+    }
+    header {
+      background: linear-gradient(to right, #2563eb, #60a5fa);
+      color: white;
+    }
+    header h1 { font-size: 3rem; margin-bottom: 20px; }
+    header p { font-size: 1.2rem; max-width: 600px; }
+
+    section {
+      padding: 100px 20px;
+    }
+    section:nth-child(even) { background: #f9f9f9; }
+    section h2 { font-size: 2.5rem; margin-bottom: 15px; color: #2563eb; }
+    section p { max-width: 600px; font-size: 1.1rem; color: #555; }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .menu-btn { display: block; }
+      .mobile { display: none; }
+      .mobile.open { display: flex; }
+      header h1 { font-size: 2rem; }
+      header p { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar">
+    <div class="logo">NavBar</div>
+    <div class="nav-links">
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="menu-btn" id="menuBtn">☰</button>
+  </nav>
+
+  <div class="mobile" id="mobileMenu">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <header id="home">
+    <h1>Welcome to My Landing Page</h1>
+    <p>Clean & modern responsive design with a fixed interactive navbar.</p>
+  </header>
+
+  <section id="about">
+    <h2>About</h2>
+    <p>This is a styled landing page with a responsive fixed navigation bar that changes on scroll and hover.</p>
+  </section>
+
+  <section id="services">
+    <h2>Services</h2>
+    <p>We provide modern web design, responsive layouts, and interactive features.</p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Email us at <b>infoNavBar@gmail.com</b> or follow us on social media.</p>
+  </section>
+
+  <script>
+    const navbar = document.getElementById("navbar");
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const links = document.querySelectorAll("nav a, .mobile a");
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 20) navbar.classList.add("scrolled");
+      else navbar.classList.remove("scrolled");
+    });
+
+    menuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("open");
+    });
+
+    links.forEach(link => {
+      link.addEventListener("click", () => {
+        document.querySelectorAll("a").forEach(a => a.classList.remove("active"));
+        link.classList.add("active");
+        mobileMenu.classList.remove("open");
+      });
+    });
+  </script>
+</body>
+</html>
